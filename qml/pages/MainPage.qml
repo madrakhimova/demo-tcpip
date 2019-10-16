@@ -4,11 +4,9 @@ import demo.tcpip 1.0
 
 Page {
     id: page
-    property string defaultHttp: "https://sailfishos.org"
-
-    function updateText() {
-        reply.text = sender.contents
-    }
+    property string defaultHttp: "http://kappa.cs.petrsu.ru"
+    property string defaultSsh: "ssh://madrahim@kappa.cs.petrsu.ru"
+    property string defaultSftp: "sftp://madrahim@kappa.cs.petrsu.ru"
 
     Sender {
         id: sender
@@ -18,63 +16,50 @@ Page {
         }
 
         onContentsChanged: {
-            updateText()
+           updateText()
         }
+    }
+
+    TextInput  {
+       id: httpInput
+       text: defaultHttp
+       Keys.onEnterPressed: sender.sendRequest(httpInput.text)
+    }
+
+    TextInput  {
+       id: sshInput
+       Keys.onEnterPressed: sender.sendRequest(sshInput.text)
+    }
+
+    TextInput  {
+       id: sftpInput
+       Keys.onEnterPressed: sender.sendRequest(sftpInput.text)
     }
 
     SilicaFlickable
     {
-        id: contents
-        contentHeight: reply.contentHeight
-        contentWidth: reply.contentWidth
-        clip: true
+        id: flickable
         anchors {
-            bottom: row.top
-            top: parent.top
-            left: parent.left
-            right: parent.right
             margins: Theme.paddingMedium
         }
 
-        Text {
+        contentWidth: reply.width
+        contentHeight: reply.contentHeight
+
+        TextArea {
             id: reply
-            anchors.fill: parent
-            color: "white"
+            anchors.top: sftpInput.bottom
         }
 
         ScrollDecorator {
-            flickable: contents
+            flickable: flickable
         }
     }
 
-    Row {
-        id: row
-        spacing: Theme.paddingSmall
-        width: parent.width
-        anchors {
-            margins: Theme.paddingMedium
-            bottom: sourceCode.top
-            horizontalCenter: parent.horizontalCenter
-        }
-
-        TextField  {
-            id: httpInput
-            text: defaultHttp
-            width: parent.width
-
-            Keys.onReturnPressed: sender.sendRequest(text)
-        }
-    }
-
-    Text {
-       id: sourceCode
-       text: "<a href='https://github.com/madrakhimova/demo-tcpip'>source code</a>"
-       anchors {
-           horizontalCenter: parent.horizontalCenter
-           bottom: parent.bottom
-           margins: Theme.paddingMedium
-       }
-
-       onLinkActivated: Qt.openUrlExternally(text)
+    function updateText()
+    {
+        reply.text = sender.contents
+        flickable.width = reply.width
+        flickable.height = reply.height
     }
 }
