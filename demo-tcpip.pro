@@ -25,6 +25,7 @@ HEADERS += \
 DISTFILES += qml/demo-tcpip.qml \
     qml/cover/CoverPage.qml \
     qml/pages/MainPage.qml \
+    qml/pages/Source.qml \
     rpm/demo-tcpip.changes.in \
     rpm/demo-tcpip.changes.run.in \
     rpm/demo-tcpip.spec \

@@ -66,15 +66,14 @@ Page {
         }
     }
 
-    Text {
+    Button {
        id: sourceCode
-       text: "<a href='https://github.com/madrakhimova/demo-tcpip'>source code</a>"
+       text: "source code"
        anchors {
            horizontalCenter: parent.horizontalCenter
            bottom: parent.bottom
            margins: Theme.paddingMedium
        }
-
-       onLinkActivated: Qt.openUrlExternally(text)
+       onClicked: pageStack.push(Qt.resolvedUrl("Source.qml"));
     }
 }
