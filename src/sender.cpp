@@ -1,5 +1,4 @@
 #include "sender.h"
-
 #include <QNetworkReply>
 
 Sender::Sender(QObject *parent) : QObject(parent) {}
@@ -29,7 +28,8 @@ void Sender::replyFinished()
     if (reply->error() == QNetworkReply::NoError)
     {
         contents = reply->readAll();
-        qDebug() << contents;
-        contentsChanged();
+    } else {
+        contents = "An error occured";
     }
+    emit contentsChanged();
 }
